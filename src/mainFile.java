@@ -4,14 +4,22 @@ public class mainFile {
 
 	public static void main(String[] args){
 
-		ArrayList<ArrayList<String>> strArrayList = new ArrayList<ArrayList<String>>();
-		ArrayList<String> strStoreList = new ArrayList<String>();
+		ArrayList<columnVarStore> strArrayList = new ArrayList<columnVarStore>();
+		String varStrStore;
 		
-		strStoreList.add("Hi");
-		strStoreList.add("My");
-		strArrayList.add(strStoreList);
+		strArrayList.add(new columnVarStore("Hello", "My", "House"));
+		strArrayList.add(new columnVarStore("This", "On", "Fire"));
 		
-		//System.out.println(strArrayList.get(0).get(1));
+		/*
+		 * Printing out all contents of ArrayLists
+		 * For Testing
+		 */
+		for(int i = 0; i < strArrayList.size(); i++) {
+			
+			System.out.println(strArrayList.get(i).toString());
+			
+		}
+		
 		
 		
 	}
