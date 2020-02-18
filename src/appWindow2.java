@@ -1,7 +1,7 @@
 /*
  * Application Name		: Patchy
  * Description			: JAR application to generate script for sql.
- * Build				: 1.05
+ * Build				: 1.06
  * Developed by			: Edward Puah Cheng Hoe
  * 					 	  Muhammad Hairi Bin Gulamsarwar
  * Commencement Date	: 18/02/2020
@@ -31,11 +31,12 @@ import java.awt.event.ActionEvent;
 import javax.swing.JTextField;
 import java.io.File;
 import javax.swing.SwingConstants;
+import javax.swing.border.TitledBorder;
 
 public class appWindow2 {
 
 	JFileChooser openFileChooser;
-	String chooserTitle;
+	String chooserTitle, filePath, sqlFileExtension = ".sql";
 	private JFrame frmSqlScriptGenerator;
 	private JTable table;
 	private JTextField tableField;
@@ -122,7 +123,7 @@ public class appWindow2 {
 		scrollPane.setBorder(BorderFactory.createEmptyBorder());
 		
 		JScrollPane scrollPane_1 = new JScrollPane();
-		scrollPane_1.setBounds(579, 30, 395, 320);
+		scrollPane_1.setBounds(579, 16, 395, 334);
 		frmSqlScriptGenerator.getContentPane().add(scrollPane_1);
 		
 		JTextArea scriptTxtArea = new JTextArea();
@@ -133,8 +134,13 @@ public class appWindow2 {
 		scriptTxtArea.setForeground(Color.WHITE);
 		scriptTxtArea.setMargin(new Insets(10,10,10,10));
 		
+		TitledBorder scriptTitle;
+		scriptTitle = BorderFactory.createTitledBorder("Script");
+		scriptTitle.setTitleColor(Color.WHITE);
+		scriptTxtArea.setBorder(scriptTitle);
+		
 		JScrollPane scrollPane_2 = new JScrollPane();
-		scrollPane_2.setBounds(579, 373, 395, 177);
+		scrollPane_2.setBounds(579, 361, 395, 189);
 		frmSqlScriptGenerator.getContentPane().add(scrollPane_2);
 		
 		JTextArea rollTextArea = new JTextArea();
@@ -144,15 +150,10 @@ public class appWindow2 {
 		rollTextArea.setForeground(Color.WHITE);
 		rollTextArea.setMargin(new Insets(10,10,10,10));
 		
-		JLabel lblNewLabel = new JLabel("Rollback");
-		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 13));
-		lblNewLabel.setBounds(577, 355, 121, 16);
-		frmSqlScriptGenerator.getContentPane().add(lblNewLabel);
-		
-		JLabel lblScript = new JLabel("Script");
-		lblScript.setFont(new Font("Tahoma", Font.BOLD, 13));
-		lblScript.setBounds(577, 11, 121, 16);
-		frmSqlScriptGenerator.getContentPane().add(lblScript);
+		TitledBorder rollTitle;
+		rollTitle = BorderFactory.createTitledBorder("Rollback");
+		rollTitle.setTitleColor(Color.WHITE);
+		rollTextArea.setBorder(rollTitle);
 		
 		JButton btnAddRow = new JButton("Add Row\r\n");
 		btnAddRow.addActionListener(new ActionListener() {
@@ -225,12 +226,15 @@ public class appWindow2 {
 		frmSqlScriptGenerator.getContentPane().add(lblFileName);
 		
 		fileTxtField = new JTextField();
+		fileTxtField.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				System.out.println(fileTxtField.getText().toString());
+			}
+		});
 		fileTxtField.setColumns(10);
 		fileTxtField.setBounds(354, 16, 213, 30);
 		frmSqlScriptGenerator.getContentPane().add(fileTxtField);
-		
-		System.out.println("Hello There");
-		
 		
 		//((DefaultTableModel)table.getModel()).removeRow(1);
 		//((DefaultTableModel)table.getModel()).addRow(new Object[] {"Aasdasd","asdasd","asdasda"});
