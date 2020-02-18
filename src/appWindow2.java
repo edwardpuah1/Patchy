@@ -4,29 +4,21 @@ import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableColumn;
-
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import javax.swing.JTextPane;
 import javax.swing.JTextArea;
 import javax.swing.JLabel;
 import java.awt.Font;
+import java.awt.Insets;
 import java.awt.Color;
-import java.awt.Component;
-
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextField;
-import javax.swing.JToggleButton;
-import java.beans.PropertyChangeListener;
 import java.io.File;
-import java.beans.PropertyChangeEvent;
 import javax.swing.SwingConstants;
 
 public class appWindow2 {
@@ -37,7 +29,7 @@ public class appWindow2 {
 	private JTable table;
 	private JTextField tableField;
 	private JTextField folderField;
-	private JTextField textField_2;
+	private JTextField fileTxtField;
 
 	/**
 	 * Launch the application.
@@ -81,10 +73,9 @@ public class appWindow2 {
 		table.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent e) {
-				DefaultTableModel model = (DefaultTableModel) table.getModel();
 				   int rowPointer = table.getSelectedRow();
 				   int colPointer = table.getSelectedColumn();
-				   System.out.println(table.getValueAt(rowPointer, colPointer));
+				   //System.out.println(table.getValueAt(rowPointer, colPointer));
 				   
 				   if(table.getValueAt(rowPointer, 1).toString().length() > 0)
 				   {
@@ -123,22 +114,24 @@ public class appWindow2 {
 		scrollPane_1.setBounds(579, 30, 395, 320);
 		frmSqlScriptGenerator.getContentPane().add(scrollPane_1);
 		
-		JTextArea textArea = new JTextArea();
-		scrollPane_1.setViewportView(textArea);
-		textArea.setEditable(false);
-		textArea.setForeground(Color.BLACK);
-		textArea.setBackground(Color.BLACK);
-		textArea.setForeground(Color.WHITE);
+		JTextArea scriptTxtArea = new JTextArea();
+		scrollPane_1.setViewportView(scriptTxtArea);
+		scriptTxtArea.setEditable(false);
+		scriptTxtArea.setForeground(Color.BLACK);
+		scriptTxtArea.setBackground(Color.BLACK);
+		scriptTxtArea.setForeground(Color.WHITE);
+		scriptTxtArea.setMargin(new Insets(10,10,10,10));
 		
 		JScrollPane scrollPane_2 = new JScrollPane();
 		scrollPane_2.setBounds(579, 373, 395, 177);
 		frmSqlScriptGenerator.getContentPane().add(scrollPane_2);
 		
-		JTextArea textArea_1 = new JTextArea();
-		scrollPane_2.setViewportView(textArea_1);
-		textArea_1.setEditable(false);
-		textArea_1.setBackground(Color.BLACK);
-		textArea_1.setForeground(Color.WHITE);
+		JTextArea rollTextArea = new JTextArea();
+		scrollPane_2.setViewportView(rollTextArea);
+		rollTextArea.setEditable(false);
+		rollTextArea.setBackground(Color.BLACK);
+		rollTextArea.setForeground(Color.WHITE);
+		rollTextArea.setMargin(new Insets(10,10,10,10));
 		
 		JLabel lblNewLabel = new JLabel("Rollback");
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 13));
@@ -150,15 +143,15 @@ public class appWindow2 {
 		lblScript.setBounds(577, 11, 121, 16);
 		frmSqlScriptGenerator.getContentPane().add(lblScript);
 		
-		JButton btnNewButton = new JButton("Add Row\r\n");
-		btnNewButton.addActionListener(new ActionListener() {
+		JButton btnAddRow = new JButton("Add Row\r\n");
+		btnAddRow.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				((DefaultTableModel)table.getModel()).addRow(new Object[] {null, "", null, null, true});
 			}
 		});
-		btnNewButton.setFont(new Font("Tahoma", Font.BOLD, 12));
-		btnNewButton.setBounds(344, 131, 98, 23);
-		frmSqlScriptGenerator.getContentPane().add(btnNewButton);
+		btnAddRow.setFont(new Font("Tahoma", Font.BOLD, 12));
+		btnAddRow.setBounds(344, 131, 98, 23);
+		frmSqlScriptGenerator.getContentPane().add(btnAddRow);
 		
 		JButton btnDeleteRow = new JButton("Delete Row\r\n");
 		btnDeleteRow.addActionListener(new ActionListener() {
@@ -189,15 +182,15 @@ public class appWindow2 {
 		folderField.setBounds(107, 48, 371, 30);
 		frmSqlScriptGenerator.getContentPane().add(folderField);
 		
-		JLabel label = new JLabel("Folder Path:");
-		label.setHorizontalAlignment(SwingConstants.CENTER);
-		label.setFont(new Font("Tahoma", Font.BOLD, 12));
-		label.setBackground(Color.WHITE);
-		label.setBounds(20, 49, 85, 26);
-		frmSqlScriptGenerator.getContentPane().add(label);
+		JLabel lblFolderPath = new JLabel("Folder Path:");
+		lblFolderPath.setHorizontalAlignment(SwingConstants.CENTER);
+		lblFolderPath.setFont(new Font("Tahoma", Font.BOLD, 12));
+		lblFolderPath.setBackground(Color.WHITE);
+		lblFolderPath.setBounds(20, 49, 85, 26);
+		frmSqlScriptGenerator.getContentPane().add(lblFolderPath);
 		
-		JButton button = new JButton("Open File");
-		button.addActionListener(new ActionListener() {
+		JButton btnOpenFile = new JButton("Open File");
+		btnOpenFile.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				openFileChooser = new JFileChooser();
 				openFileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
@@ -205,25 +198,25 @@ public class appWindow2 {
 				openFileChooser.setDialogTitle(chooserTitle);
 				openFileChooser.setAcceptAllFileFilterUsed(false);
 				
-				if(openFileChooser.showOpenDialog(button) == JFileChooser.APPROVE_OPTION) {
+				if(openFileChooser.showOpenDialog(btnOpenFile) == JFileChooser.APPROVE_OPTION) {
 					folderField.setText(openFileChooser.getSelectedFile().toString());
 				}else {
 					folderField.setText("No File Path Chosen");
 				}
 			}
 		});
-		button.setBounds(488, 52, 79, 23);
-		frmSqlScriptGenerator.getContentPane().add(button);
+		btnOpenFile.setBounds(488, 52, 79, 23);
+		frmSqlScriptGenerator.getContentPane().add(btnOpenFile);
 		
 		JLabel lblFileName = new JLabel("File Name: ");
 		lblFileName.setFont(new Font("Tahoma", Font.BOLD, 13));
 		lblFileName.setBounds(284, 22, 68, 16);
 		frmSqlScriptGenerator.getContentPane().add(lblFileName);
 		
-		textField_2 = new JTextField();
-		textField_2.setColumns(10);
-		textField_2.setBounds(354, 16, 213, 30);
-		frmSqlScriptGenerator.getContentPane().add(textField_2);
+		fileTxtField = new JTextField();
+		fileTxtField.setColumns(10);
+		fileTxtField.setBounds(354, 16, 213, 30);
+		frmSqlScriptGenerator.getContentPane().add(fileTxtField);
 		
 		
 		//((DefaultTableModel)table.getModel()).removeRow(1);
