@@ -1,3 +1,10 @@
+/*
+ * Application Name	: Patchy
+ * Build			: 1.01
+ * Developed by		: Edward Puah Cheng Hoe
+ * 					  Hairi
+ */
+
 import java.awt.EventQueue;
 
 import javax.swing.BorderFactory;
