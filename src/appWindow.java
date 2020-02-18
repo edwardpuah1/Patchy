@@ -1,103 +1,158 @@
-import java.awt.EventQueue;
-import java.awt.Font;
 
-import javax.swing.JFrame;
 import java.awt.Color;
-import java.awt.Window.Type;
-import javax.swing.JComboBox;
-import java.awt.BorderLayout;
-import javax.swing.JSpinner;
-import javax.swing.JPanel;
-import javax.swing.JSplitPane;
-import javax.swing.JInternalFrame;
-import java.awt.GridLayout;
-import javax.swing.Box;
-import javax.swing.JMenuBar;
-import javax.swing.JTabbedPane;
-import javax.swing.border.BevelBorder;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.JButton;
-import java.awt.event.ActionListener;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
-import javax.swing.JTextPane;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import javax.swing.JFormattedTextField;
-import javax.swing.JEditorPane;
-import javax.swing.JLabel;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JScrollPane;
-import java.awt.Button;
-import java.awt.Canvas;
-import javax.swing.JScrollBar;
 import javax.swing.JTable;
-import javax.swing.ListSelectionModel;
+import javax.swing.JTextField;
+import javax.swing.table.DefaultTableModel;
 
 public class appWindow {
 
-	private JFrame frmPatchy;
-	private JTable table;
-	private JTable table_1;
+    public static void main(String[] args){
+        
+        // create JFrame and JTable
+        JFrame frame = new JFrame();
+        JTable table = new JTable(); 
+        
+        // create a table model and set a Column Identifiers to this model 
+        Object[] columns = {"Id","First Name","Last Name","Age"};
+        DefaultTableModel model = new DefaultTableModel();
+        model.setColumnIdentifiers(columns);
+        
+        // set the model to the table
+        table.setModel(model);
+        
+        // Change A JTable Background Color, Font Size, Font Color, Row Height
+        table.setBackground(Color.LIGHT_GRAY);
+        table.setForeground(Color.black);
+        Font font = new Font("",1,22);
+        table.setFont(font);
+        table.setRowHeight(30);
+        
+        // create JTextFields
+        JTextField textId = new JTextField();
+        JTextField textFname = new JTextField();
+        JTextField textLname = new JTextField();
+        JTextField textAge = new JTextField();
+        
+        // create JButtons
+        JButton btnAdd = new JButton("Add");
+        JButton btnDelete = new JButton("Delete");
+        JButton btnUpdate = new JButton("Update");     
+        
+        textId.setBounds(20, 220, 100, 25);
+        textFname.setBounds(20, 250, 100, 25);
+        textLname.setBounds(20, 280, 100, 25);
+        textAge.setBounds(20, 310, 100, 25);
+        
+        btnAdd.setBounds(150, 220, 100, 25);
+        btnUpdate.setBounds(150, 265, 100, 25);
+        btnDelete.setBounds(150, 310, 100, 25);
+        
+        // create JScrollPane
+        JScrollPane pane = new JScrollPane(table);
+        pane.setBounds(0, 0, 880, 200);
+        
+        frame.setLayout(null);
+        
+        frame.add(pane);
+        
+        // add JTextFields to the jframe
+        frame.add(textId);
+        frame.add(textFname);
+        frame.add(textLname);
+        frame.add(textAge);
+    
+        // add JButtons to the jframe
+        frame.add(btnAdd);
+        frame.add(btnDelete);
+        frame.add(btnUpdate);
+        
+        // create an array of objects to set the row data
+        Object[] row = new Object[4];
+        
+        // button add row
+        btnAdd.addActionListener(new ActionListener(){
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					appWindow window = new appWindow();
-					window.frmPatchy.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+            @Override
+            public void actionPerformed(ActionEvent e) {
+             
+                row[0] = textId.getText();
+                row[1] = textFname.getText();
+                row[2] = textLname.getText();
+                row[3] = textAge.getText();
+                
+                // add row to the model
+                model.addRow(row);
+            }
+        });
+        
+        // button remove row
+        btnDelete.addActionListener(new ActionListener(){
 
-	/**
-	 * Create the application.
-	 */
-	public appWindow() {
-		initialize();
-	}
+            @Override
+            public void actionPerformed(ActionEvent e) {
+            
+                // i = the index of the selected row
+                int i = table.getSelectedRow();
+                if(i >= 0){
+                    // remove a row from jtable
+                    model.removeRow(i);
+                }
+                else{
+                    System.out.println("Delete Error");
+                }
+            }
+        });
+        
+        // get selected row data From table to textfields 
+        table.addMouseListener(new MouseAdapter(){
+        
+        @Override
+        public void mouseClicked(MouseEvent e){
+            
+            // i = the index of the selected row
+            int i = table.getSelectedRow();
+            
+            textId.setText(model.getValueAt(i, 0).toString());
+            textFname.setText(model.getValueAt(i, 1).toString());
+            textLname.setText(model.getValueAt(i, 2).toString());
+            textAge.setText(model.getValueAt(i, 3).toString());
+        }
+        });
+        
+        // button update row
+        btnUpdate.addActionListener(new ActionListener(){
 
-	/**
-	 * Initialize the contents of the frame.
-	 */
-	@SuppressWarnings("serial")
-	private void initialize() {
-		frmPatchy = new JFrame();
-		frmPatchy.setTitle("Patchy");
-		frmPatchy.setBackground(Color.WHITE);
-		frmPatchy.setBounds(100, 100, 880, 435);
-		frmPatchy.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frmPatchy.getContentPane().setLayout(null);
-		
-		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(10, 125, 458, 260);
-		frmPatchy.getContentPane().add(scrollPane);
-		
-		Object[][] object = new Object[][] {{null, null, null, null, null}};
-		
-		table_1 = new JTable();
-		table_1.setModel(new DefaultTableModel(
-			new Object[][] {
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-			},
-			new String[] {
-				"Column Name", "Where", "Is NULL", "Update", "Is String"
-			}
-		) {
-			Class[] columnTypes = new Class[] {
-				String.class, String.class, Boolean.class, String.class, Boolean.class
-			};
-			public Class getColumnClass(int columnIndex) {
-				return columnTypes[columnIndex];
-			}
-		});
-		scrollPane.setViewportView(table_1);
-
-	}
+            @Override
+            public void actionPerformed(ActionEvent e) {
+             
+                // i = the index of the selected row
+                int i = table.getSelectedRow();
+                
+                if(i >= 0) 
+                {
+                   model.setValueAt(textId.getText(), i, 0);
+                   model.setValueAt(textFname.getText(), i, 1);
+                   model.setValueAt(textLname.getText(), i, 2);
+                   model.setValueAt(textAge.getText(), i, 3);
+                }
+                else{
+                    System.out.println("Update Error");
+                }
+            }
+        });
+        
+        frame.setSize(900,400);
+        frame.setLocationRelativeTo(null);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setVisible(true);
+        
+    }
 }

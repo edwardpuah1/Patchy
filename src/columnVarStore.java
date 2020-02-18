@@ -4,6 +4,8 @@ public class columnVarStore {
 	private String varName;
 	private String colName;
 	private String updateName;
+	private Boolean isString;
+	private Boolean isNull;
 	
 	public columnVarStore(String colName, String varName, String updateName) {
 		this.colName = colName;
