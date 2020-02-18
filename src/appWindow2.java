@@ -1,8 +1,11 @@
 /*
- * Application Name	: Patchy
- * Build			: 1.01
- * Developed by		: Edward Puah Cheng Hoe
- * 					  Hairi
+ * Application Name		: Patchy
+ * Description			: JAR application to generate script for sql.
+ * Build				: 1.05
+ * Developed by			: Edward Puah Cheng Hoe
+ * 					 	  Muhammad Hairi Bin Gulamsarwar
+ * Commencement Date	: 18/02/2020
+ * 
  */
 
 import java.awt.EventQueue;
@@ -12,6 +15,7 @@ import javax.swing.JFrame;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import javax.swing.JTextArea;
@@ -225,9 +229,12 @@ public class appWindow2 {
 		fileTxtField.setBounds(354, 16, 213, 30);
 		frmSqlScriptGenerator.getContentPane().add(fileTxtField);
 		
+		System.out.println("Hello There");
+		
 		
 		//((DefaultTableModel)table.getModel()).removeRow(1);
 		//((DefaultTableModel)table.getModel()).addRow(new Object[] {"Aasdasd","asdasd","asdasda"});
 		
 	}
+	
 }
